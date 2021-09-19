@@ -262,7 +262,7 @@ altddio_out
 #(
 	.extend_oe_disable("OFF"),
 	.intended_device_family("Cyclone V"),
-	.invert_output("OFF"),
+	.invert_output("ON"),
 	.lpm_hint("UNUSED"),
 	.lpm_type("altddio_out"),
 	.oe_reg("UNREGISTERED"),
@@ -271,8 +271,8 @@ altddio_out
 )
 sdramclk_ddr
 (
-	.datain_h(1'b0),
-	.datain_l(1'b1),
+	.datain_h(1'b1),
+	.datain_l(1'b0),
 	.outclock(clk),
 	.dataout(DRAM_CLK),
 	.aclr(1'b0),
