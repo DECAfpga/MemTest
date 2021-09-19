@@ -34,7 +34,8 @@
 #    and any changes you make may be lost or overwritten.
 #
 # -------------------------------------------------------------------------- #
-
+#
+#
 
 
 # Project-Wide Assignments
@@ -46,12 +47,16 @@ set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:24:10  MAY 27, 2021"
 set_global_assignment -name LAST_QUARTUS_VERSION "17.1.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 6
+set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
 
-set_global_assignment -name ENABLE_OCT_DONE ON
+set_global_assignment -name ENABLE_OCT_DONE OFF
 set_global_assignment -name EXTERNAL_FLASH_FALLBACK_ADDRESS 00000000
 set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "PASSIVE SERIAL"
 set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
-set_global_assignment -name INTERNAL_FLASH_UPDATE_MODE "SINGLE COMP IMAGE WITH ERAM"
+set_global_assignment -name INTERNAL_FLASH_UPDATE_MODE "SINGLE IMAGE WITH ERAM"
 set_global_assignment -name CRC_ERROR_OPEN_DRAIN OFF
 set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
@@ -60,77 +65,38 @@ set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -
 
 
 
-
-
+# ==========================
 # Pin & Location Assignments
 # ==========================
 
-
-
-
+# CLOCK
+# =====
 set_location_assignment PIN_M8 -to clock_50_i
+set_instance_assignment -name IO_STANDARD "2.5 V" -to clock_50_i
 
+# LED
+# =====
 set_location_assignment PIN_C7 -to LED
+set_instance_assignment -name IO_STANDARD "1.2 V" -to LED
 
 
-#============================================================
 # KEY
-#============================================================
+# =====
 set_location_assignment PIN_H21 -to KEY[0]
 set_instance_assignment -name IO_STANDARD "1.5 V SCHMITT TRIGGER" -to KEY[0]
 set_location_assignment PIN_H22 -to KEY[1]
 set_instance_assignment -name IO_STANDARD "1.5 V SCHMITT TRIGGER" -to KEY[1]
 
+# SW
+# =====
+set_location_assignment PIN_J21 -to SW[0]
+set_instance_assignment -name IO_STANDARD "1.5 V SCHMITT TRIGGER" -to SW[0]
+set_location_assignment PIN_J22 -to SW[1]
+set_instance_assignment -name IO_STANDARD "1.5 V SCHMITT TRIGGER" -to SW[1]
 
 
-### SDRAM
-set_location_assignment PIN_Y17 -to SDRAM_A[0]
-set_location_assignment PIN_W14 -to SDRAM_A[1]
-set_location_assignment PIN_U15 -to SDRAM_A[2]
-set_location_assignment PIN_R13 -to SDRAM_A[3]
-set_location_assignment PIN_Y13 -to SDRAM_A[4]
-set_location_assignment PIN_AB11 -to SDRAM_A[5]
-set_location_assignment PIN_AA11 -to SDRAM_A[6]
-set_location_assignment PIN_AB12 -to SDRAM_A[7]
-set_location_assignment PIN_AA12 -to SDRAM_A[8]
-set_location_assignment PIN_AB13 -to SDRAM_A[9]
-set_location_assignment PIN_V14 -to SDRAM_A[10]
-set_location_assignment PIN_AA13 -to SDRAM_A[11]
-set_location_assignment PIN_AB14 -to SDRAM_A[12]
-#
-set_location_assignment PIN_AA20 -to SDRAM_DQ[0]
-set_location_assignment PIN_AA19 -to SDRAM_DQ[1]
-set_location_assignment PIN_AB21 -to SDRAM_DQ[2]
-set_location_assignment PIN_AB20 -to SDRAM_DQ[3]
-set_location_assignment PIN_AB19 -to SDRAM_DQ[4]
-set_location_assignment PIN_Y16 -to SDRAM_DQ[5]
-set_location_assignment PIN_V16 -to SDRAM_DQ[6]
-set_location_assignment PIN_AB18 -to SDRAM_DQ[7]
-set_location_assignment PIN_AA15 -to SDRAM_DQ[8]
-set_location_assignment PIN_Y14 -to SDRAM_DQ[9]
-set_location_assignment PIN_W15 -to SDRAM_DQ[10]
-set_location_assignment PIN_AB15 -to SDRAM_DQ[11]
-set_location_assignment PIN_W16 -to SDRAM_DQ[12]
-set_location_assignment PIN_AB16 -to SDRAM_DQ[13]
-set_location_assignment PIN_V15 -to SDRAM_DQ[14]
-set_location_assignment PIN_W17 -to SDRAM_DQ[15]
-#
-# CKE not connected on XS 2.2/2.4.
-set_location_assignment PIN_AA16 -to SDRAM_CKE
-set_location_assignment PIN_AA14 -to SDRAM_CLK
-set_location_assignment PIN_W12 -to SDRAM_nCAS
-set_location_assignment PIN_W11 -to SDRAM_nRAS
-set_location_assignment PIN_AB10 -to SDRAM_nWE
-set_location_assignment PIN_V12 -to SDRAM_nCS
-#
-set_location_assignment PIN_V11 -to SDRAM_BA[0]
-set_location_assignment PIN_V13 -to SDRAM_BA[1]
-# DQML/DQMH not connected on XS 2.2/2.4
-set_location_assignment PIN_Y11 -to SDRAM_DQML
-set_location_assignment PIN_W13 -to SDRAM_DQMH
-###
-
-# Video
+# VGA
+# =====
 set_location_assignment PIN_W7 -to VGA_HS
 set_location_assignment PIN_W6 -to VGA_VS
 set_location_assignment PIN_AB6 -to VGA_B[2]
@@ -144,36 +110,16 @@ set_location_assignment PIN_Y7 -to VGA_R[1]
 set_location_assignment PIN_U7 -to VGA_R[0]
 
 
-#NEPTUNO TECLADO Y RATÓN#
+# KEYBOARD PS2
+# =====
 set_location_assignment PIN_Y5 -to ps2_clk_io
 set_location_assignment PIN_Y6 -to ps2_data_io
-set_location_assignment PIN_W9 -to ps2_mouse_clk_io
-set_location_assignment PIN_W5 -to ps2_mouse_data_io
-
-#NEPTUNO#
-#set_location_assignment PIN_AA18 -to joy_p7_o
-#set_location_assignment PIN_A20 -to joy_clock_o
-#set_location_assignment PIN_B19 -to joy_data_i
-#set_location_assignment PIN_B20 -to joy_load_o
-
-#NEPTUNO#
-#set_location_assignment PIN_A3 -to AUDIO_L
-#set_location_assignment PIN_B4 -to AUDIO_R
-#set_location_assignment PIN_N5 -to mic_o -- No asignado
-#set_location_assignment PIN_AA13 -to ear_i
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ps2_clk_io
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ps2_data_io
 
 
-#NEPTUNO SD/MMC#
-#set_location_assignment PIN_D22 -to sd_cs_n_o
-#set_location_assignment PIN_E21 -to sd_miso_i
-#set_location_assignment PIN_D21 -to sd_mosi_o
-#set_location_assignment PIN_E22 -to sd_sclk_o
-
-
-
-#============================================================
 # HDMI-TX
-#============================================================
+# =====
 set_location_assignment PIN_C10 -to HDMI_I2C_SCL
 set_instance_assignment -name IO_STANDARD "1.8 V" -to HDMI_I2C_SCL
 set_location_assignment PIN_B15 -to HDMI_I2C_SDA
@@ -252,13 +198,51 @@ set_location_assignment PIN_C11 -to HDMI_TX_VS
 set_instance_assignment -name IO_STANDARD "1.8 V" -to HDMI_TX_VS
 
 
-#############  set_instance_assignment
+# SDRAM
+# =====
+set_location_assignment PIN_Y17 -to SDRAM_A[0]
+set_location_assignment PIN_W14 -to SDRAM_A[1]
+set_location_assignment PIN_U15 -to SDRAM_A[2]
+set_location_assignment PIN_R13 -to SDRAM_A[3]
+set_location_assignment PIN_Y13 -to SDRAM_A[4]
+set_location_assignment PIN_AB11 -to SDRAM_A[5]
+set_location_assignment PIN_AA11 -to SDRAM_A[6]
+set_location_assignment PIN_AB12 -to SDRAM_A[7]
+set_location_assignment PIN_AA12 -to SDRAM_A[8]
+set_location_assignment PIN_AB13 -to SDRAM_A[9]
+set_location_assignment PIN_V14 -to SDRAM_A[10]
+set_location_assignment PIN_AA13 -to SDRAM_A[11]
+set_location_assignment PIN_AB14 -to SDRAM_A[12]
+set_location_assignment PIN_AA20 -to SDRAM_DQ[0]
+set_location_assignment PIN_AA19 -to SDRAM_DQ[1]
+set_location_assignment PIN_AB21 -to SDRAM_DQ[2]
+set_location_assignment PIN_AB20 -to SDRAM_DQ[3]
+set_location_assignment PIN_AB19 -to SDRAM_DQ[4]
+set_location_assignment PIN_Y16 -to SDRAM_DQ[5]
+set_location_assignment PIN_V16 -to SDRAM_DQ[6]
+set_location_assignment PIN_AB18 -to SDRAM_DQ[7]
+set_location_assignment PIN_AA15 -to SDRAM_DQ[8]
+set_location_assignment PIN_Y14 -to SDRAM_DQ[9]
+set_location_assignment PIN_W15 -to SDRAM_DQ[10]
+set_location_assignment PIN_AB15 -to SDRAM_DQ[11]
+set_location_assignment PIN_W16 -to SDRAM_DQ[12]
+set_location_assignment PIN_AB16 -to SDRAM_DQ[13]
+set_location_assignment PIN_V15 -to SDRAM_DQ[14]
+set_location_assignment PIN_W17 -to SDRAM_DQ[15]
+set_location_assignment PIN_V11 -to SDRAM_BA[0]
+set_location_assignment PIN_V13 -to SDRAM_BA[1]
+# CKE not connected on XS 2.2/2.4.
+set_location_assignment PIN_AA16 -to SDRAM_CKE
+set_location_assignment PIN_AA14 -to SDRAM_CLK
+set_location_assignment PIN_W12 -to SDRAM_nCAS
+set_location_assignment PIN_W11 -to SDRAM_nRAS
+set_location_assignment PIN_AB10 -to SDRAM_nWE
+set_location_assignment PIN_V12 -to SDRAM_nCS
+# DQML/DQMH not connected on XS 2.2/2.4
+set_location_assignment PIN_Y11 -to SDRAM_DQML
+set_location_assignment PIN_W13 -to SDRAM_DQMH
 
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ps2_clk_io
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ps2_data_io
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ps2_mouse_clk_io
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ps2_mouse_data_io
-#set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to sd_miso_i
+# SDRAM set_instance_assignment
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[12]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[11]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[10]
@@ -272,11 +256,6 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[3]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[2]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[1]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[0]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_BA[1]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_BA[0]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nCAS
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_CKE
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nCS
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_DQ[15]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_DQ[14]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_DQ[13]
@@ -293,29 +272,16 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_DQ[3]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_DQ[2]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_DQ[1]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_DQ[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_BA[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_BA[0]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_DQMH
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_DQML
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_CKE
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nCAS
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nRAS
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nWE
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[0]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[1]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[2]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[3]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[4]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[5]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[6]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[7]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[8]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[9]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[10]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[11]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_A[12]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_BA[0]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_BA[1]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_nCAS
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_CKE
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_CLK
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_nCS
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nCS
+
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[0]
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[1]
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[2]
@@ -332,10 +298,6 @@ set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[12]
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[13]
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[14]
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[15]
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQML
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQMH
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_nRAS
-set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_nWE
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[0]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[1]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[2]
@@ -349,12 +311,6 @@ set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[9]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[10]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[11]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[12]
-set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_BA[0]
-set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_BA[1]
-set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nCAS
-set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_CKE
-set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_CLK
-set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nCS
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[0]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[1]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[2]
@@ -371,10 +327,14 @@ set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[12]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[13]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[14]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[15]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_BA[0]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_BA[1]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQML
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQMH
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nCAS
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nRAS
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nWE
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nCS
 set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[0]
 set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[1]
 set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[2]
@@ -392,8 +352,12 @@ set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[13]
 set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[14]
 set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[15]
 
-#set_global_assignment -name VERILOG_FILE joydecoder_2.v
-#set_global_assignment -name VHDL_FILE kbd_joystick.vhd
+#======================================
+# Project files
+#======================================
+
+set_global_assignment -name VERILOG_FILE joydecoder_2.v
+set_global_assignment -name VHDL_FILE kbd_joystick.vhd
 set_global_assignment -name VHDL_FILE io_ps2_keyboard.vhd
 set_global_assignment -name VERILOG_FILE ../../src/vgaout.v
 set_global_assignment -name VERILOG_FILE ../../src/tester.v
@@ -415,19 +379,16 @@ set_global_assignment -name QIP_FILE reconfig_140.qip
 set_global_assignment -name QIP_FILE reconfig_150.qip
 set_global_assignment -name QIP_FILE reconfig_160.qip
 set_global_assignment -name QIP_FILE reconfig_167.qip
-set_global_assignment -name CDF_FILE output_files/Chain3.cdf
 
+set_global_assignment -name VERILOG_FILE rtl_deca/hdmi/I2C_Controller.v
+set_global_assignment -name VERILOG_FILE rtl_deca/hdmi/I2C_HDMI_Config.v
 
-set_global_assignment -name VERILOG_FILE video/I2C_Controller.v
-set_global_assignment -name VERILOG_FILE video/I2C_HDMI_Config.v
+#
+#======================================
 
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-
-
-
-
 
 
 

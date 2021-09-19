@@ -42,9 +42,10 @@ module memtest_deca
 	// Clocks
 	input wire	clock_50_i,
 
-	//////////// KEY //////////
+	// KEY / SW
 	input 		     [1:0]		KEY,
-		
+	input 		     [1:0]		SW,
+	
 	// SDRAM	
 	output [12:0] SDRAM_A,
 	output  [1:0] SDRAM_BA,
@@ -61,30 +62,15 @@ module memtest_deca
 	// PS2
 	input wire	ps2_clk_io,
 	input wire	ps2_data_io,
-	inout wire	ps2_mouse_clk_io,
-	inout wire	ps2_mouse_data_io,
 
-/*	// SD Card
-	output wire	sd_cs_n_o			= 1'b1,
-	output wire	sd_sclk_o			= 1'b0,
-	output wire	sd_mosi_o			= 1'b0,
-	input wire	sd_miso_i,
-*/
+        // Joysticks    
+	/* output wire joy_clock_o       = 1'b1,
+	   output wire joy_load_o        = 1'b1,
+	   input  wire joy_data_i,
+	   output wire joy_p7_o          = 1'b1,
+        */
 
- /*  // Joysticks
-   output wire joy_clock_o       = 1'b1,
-   output wire joy_load_o        = 1'b1,
-   input  wire joy_data_i,
-   output wire joy_p7_o          = 1'b1,
-*/
-	// Audio
-	output        AUDIO_L,
-	output        AUDIO_R,
-	input wire	ear_i,
-	output wire	mic_o					= 1'b0,
-
-
-	//////////// HDMI-TX //////////
+	// HDMI-TX 
 	inout 		          		HDMI_I2C_SCL,
 	inout 		          		HDMI_I2C_SDA,
 	inout 		     [3:0]		HDMI_I2S,
@@ -98,54 +84,32 @@ module memtest_deca
 	input 		          		HDMI_TX_INT,
 	output		          		HDMI_TX_VS,
 
-
-		// VGA
+	// VGA
 	output  [2:0] VGA_R,
 	output  [2:0] VGA_G,
 	output  [2:0] VGA_B,
 	output        VGA_HS,
-	output        VGA_VS//,
+	output        VGA_VS
+	
 );
 
-
-assign AUDIO_L = 0;
-assign AUDIO_R = 0;
 
 
 wire [31:0] status;
-wire  [1:0] buttons;
+wire [1:0] buttons;
 
-reg  [1:0] sdram_sz = 2'b01; //0 - no memory board detected   1 - 32 MB  2 - 64 MB  3 - 128 MB
+reg  direct = 1'b0;
 
-reg direct = 1'b0;
+// SELECT TYPE OF MEMORY ATTACHED
+reg  [1:0] sdram_sz = 2'b01;       //0 - no memory board detected   1 - 32 MB  2 - 64 MB  3 - 128 MB
 
 
-/*
-reg  [10:0] ps2_key;
-wire  [1:0] sdram_sz;
-hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
-(
-	.clk_sys(CLK_50M),
-	.HPS_BUS(HPS_BUS),
 
-	.conf_str(CONF_STR),
-	.status(status),
-	.buttons(buttons),
-	.sdram_sz(sdram_sz),
-
-	.ps2_key(ps2_key),
-	.ps2_kbd_led_use(0),
-	.ps2_kbd_led_status(0)
-);
-*/
-
-//wire RESET = ~btn_n_i[1];
 wire RESET = w_reset;
 
 /*
 wire joy1_up_i, joy1_down_i, joy1_left_i, joy1_right_i, joy1_p6_i, joy1_p9_i;
 wire joy2_up_i, joy2_down_i, joy2_left_i, joy2_right_i, joy2_p6_i, joy2_p9_i;
-
 
 joydecoder joystick_serial  (
     .clk          ( clock_50_i ), 	
@@ -211,7 +175,6 @@ pll pll
 	
 );
 
-assign ps2_mouse_clk_io = clk_ram;
 
 	pll_reconfig pll_reconfig
 	(
@@ -272,7 +235,6 @@ begin
 end		
 
 	
-	
 reg recfg = 0;
 
 // Phases here are empirically adjusted based on 167MHz synthesized core 
@@ -303,8 +265,6 @@ reg btn_rst, old_btn_rst;
 reg btn_up, old_btn_up;
 reg btn_down, old_btn_down;
 reg btn_auto, old_btn_auto;
-
-
 
 
 always @(posedge clock_50_i) begin
@@ -499,13 +459,10 @@ tester my_memtst
 );
 
 ///////////////////////////////////////////////////////////////////
-//  HDMI VIDEO
-wire reset_n = KEY[0];
-
 //HDMI I2C	
 I2C_HDMI_Config u_I2C_HDMI_Config (
 	.iCLK(clock_50_i),
-	.iRST_N(reset_n),
+	.iRST_N(~RESET),
 	.I2C_SCLK(HDMI_I2C_SCL),
 	.I2C_SDAT(HDMI_I2C_SDA),
 	.HDMI_TX_INT(HDMI_TX_INT)
@@ -535,6 +492,7 @@ vid_pll vid_pll
 
 wire hs, vs, VGA_DE;
 wire [1:0] b, r, g;
+
 vgaout showrez
 (
 	.clk(videoclk),
@@ -559,27 +517,21 @@ assign VGA_B  = {3{b}};
 assign VGA_R  = {3{r}};
 assign VGA_G  = {3{g}};
 
-//debounce # ( .counter_size (10)) debounce1 ( .clk_i   (clock_50_i),   .button_i (~btn_n_i[1]), .result_o  (btn_rst)); 
-//debounce # ( .counter_size (10)) debounce2 ( .clk_i   (clock_50_i),   .button_i (~btn_n_i[2]), .result_o  (btn_up)); 
-//debounce # ( .counter_size (10)) debounce3 ( .clk_i   (clock_50_i),   .button_i (~btn_n_i[4]), .result_o  (btn_down)); 
-//debounce # ( .counter_size (10)) debounce4 ( .clk_i   (clock_50_i),   .button_i (~btn_n_i[3]), .result_o  (btn_auto)); 
-
-
-debounce # ( .counter_size (10)) debounce1 ( .clk_i   (clock_50_i),   .button_i (m_reset), .result_o  (btn_rst)); 
-debounce # ( .counter_size (10)) debounce2 ( .clk_i   (clock_50_i),   .button_i (m_up), .result_o  (btn_up)); 
-debounce # ( .counter_size (10)) debounce3 ( .clk_i   (clock_50_i),   .button_i (m_down), .result_o  (btn_down)); 
-debounce # ( .counter_size (10)) debounce4 ( .clk_i   (clock_50_i),   .button_i (m_auto), .result_o  (btn_auto)); 
-
+///////////////////////////////////////////////////////////////////
 
 // delgrom keyboard and joysticks
-
-wire m_up     = JoyPCFRLDU[0];   // | ~joy1_up_i;		//arriba
-wire m_down   = JoyPCFRLDU[1];   // | ~joy1_down_i;		//abajo
-wire m_auto  =  JoyPCFRLDU[5];   // | ~joy1_p6_i;		//a
-wire m_reset  =  w_reset;					//escape
-
 wire [12:0] JoyPCFRLDU;
 wire w_reset;
+
+wire m_up     = JoyPCFRLDU[0] | ~KEY[0];   // | ~joy1_up_i;		//arriba
+wire m_down   = JoyPCFRLDU[1] | ~KEY[1];   // | ~joy1_down_i;	//abajo
+wire m_auto  =  JoyPCFRLDU[5] | ~SW[1];    // | ~joy1_p6_i;		//a
+wire m_reset  =  w_reset;						//escape
+
+debounce # ( .counter_size (10)) debounce1 ( .clk_i   (clock_50_i),   .button_i (m_reset), .result_o  (btn_rst)); 
+debounce # ( .counter_size (10)) debounce2 ( .clk_i   (clock_50_i),   .button_i (m_up),   .result_o  (btn_up)); 
+debounce # ( .counter_size (10)) debounce3 ( .clk_i   (clock_50_i),   .button_i (m_down), .result_o  (btn_down)); 
+debounce # ( .counter_size (10)) debounce4 ( .clk_i   (clock_50_i),   .button_i (m_auto), .result_o  (btn_auto)); 
 
 wire kbd_intr;
 wire [7:0] kbd_scancode;
@@ -595,7 +547,6 @@ io_ps2_keyboard keyboard
   .scancode  ( kbd_scancode )
 );
 
-
 //translate scancode to joystick
 kbd_joystick k_joystick
 (
@@ -606,7 +557,6 @@ kbd_joystick k_joystick
   .osd_o	  ( keys_s ),
   .reset          (w_reset)
 );
-
 
 
 endmodule

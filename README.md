@@ -10,6 +10,8 @@ Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](
 
 Added HDMI Output.
 
+Added board buttons to control test.
+
 
 
 ### Result of memtest:     Working at 167 MHz without errors
@@ -22,27 +24,26 @@ Added HDMI Output.
 
 ![MemTest screen](memtest.png)
 
- 1. Auto mode indicator (animated),
- 2. Test time passed in minutes,
- 3. Current memory module frequency in MHz,
+ 1. Auto mode indicator (animated)
+ 2. Test time passed in minutes
+ 3. Current memory module frequency in MHz
  4. Memory module size:
-    * 0 - no memory board detected
+    * 0 - no memory board
     * 1 - 32 MB
     * 2 - 64 MB
     * 3 - 128 MB
- 5. Number of of passed test cycles (each cycle is 32 MB),
+ 5. Number of of passed test cycles (each cycle is 32 MB)
  6. Number of failed tests.
 
 ## Controls (keyboard)
-* Up - increase frequency
+* Up - increase frequency   (KEY0 BUTTON)
 
-* Down - decrease frequency
+* Down - decrease frequency (KEY1 BUTTON)
 
 * ESC - reset the test
 
-* A - auto mode, detecting the maximum frequency for module being tested. Test starts from maximum frequency.
-  With every error frequency will be decreased.
-
+* A - auto mode, detecting the maximum frequency for module being tested. Test starts from maximum frequency. With every error frequency will be decreased. [SW1 SWITCH]
+  
   
 
 Test is passed if amount of errors is 0. For quick test let it run for 10 minutes in auto mode. If you want to be sure, let it run for 1-2 hours.
