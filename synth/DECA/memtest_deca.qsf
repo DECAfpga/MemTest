@@ -244,7 +244,7 @@ set_location_assignment PIN_W13 -to SDRAM_DQMH
 
 # SDRAM set_instance_assignment
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[12]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[11]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[10]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[9]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_A[8]
@@ -389,6 +389,9 @@ set_global_assignment -name VERILOG_FILE rtl_deca/hdmi/I2C_HDMI_Config.v
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+
+
+
 
 
 
