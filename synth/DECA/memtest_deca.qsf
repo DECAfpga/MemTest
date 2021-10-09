@@ -62,7 +62,13 @@ set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
+#set_global_assignment -name SEED 3
+set_global_assignment -name GENERATE_SVF_FILE ON
 
+# disable config pin so bank8 can use 1.2V 
+set_global_assignment -name AUTO_RESTART_CONFIGURATION OFF
+set_global_assignment -name ENABLE_CONFIGURATION_PINS OFF
+set_global_assignment -name ENABLE_BOOT_SEL_PIN OFF
 
 
 # ==========================
@@ -110,7 +116,7 @@ set_location_assignment PIN_Y7 -to VGA_R[1]
 set_location_assignment PIN_U7 -to VGA_R[0]
 
 
-# KEYBOARD PS2
+# KEYBOARD PS2 (P9:11,12 GPIO1_D0/1) 
 # =====
 set_location_assignment PIN_Y5 -to ps2_clk_io
 set_location_assignment PIN_Y6 -to ps2_data_io
@@ -231,13 +237,13 @@ set_location_assignment PIN_V15 -to SDRAM_DQ[14]
 set_location_assignment PIN_W17 -to SDRAM_DQ[15]
 set_location_assignment PIN_V11 -to SDRAM_BA[0]
 set_location_assignment PIN_V13 -to SDRAM_BA[1]
-# CKE not connected on XS 2.2/2.4.
-set_location_assignment PIN_AA16 -to SDRAM_CKE
 set_location_assignment PIN_AA14 -to SDRAM_CLK
 set_location_assignment PIN_W12 -to SDRAM_nCAS
 set_location_assignment PIN_W11 -to SDRAM_nRAS
 set_location_assignment PIN_AB10 -to SDRAM_nWE
 set_location_assignment PIN_V12 -to SDRAM_nCS
+# CKE not connected on XS 2.2/2.4.
+set_location_assignment PIN_AA16 -to SDRAM_CKE
 # DQML/DQMH not connected on XS 2.2/2.4
 set_location_assignment PIN_Y11 -to SDRAM_DQML
 set_location_assignment PIN_W13 -to SDRAM_DQMH
@@ -281,6 +287,7 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nCAS
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nRAS
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nWE
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SDRAM_nCS
+#set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to DRAM_CLK
 
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[0]
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[1]
@@ -329,12 +336,12 @@ set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[14]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[15]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_BA[0]
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_BA[1]
+#set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nCS
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQML
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQMH
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nCAS
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nRAS
 set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nWE
-set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nCS
 set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[0]
 set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[1]
 set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[2]
@@ -383,16 +390,11 @@ set_global_assignment -name QIP_FILE reconfig_167.qip
 set_global_assignment -name VERILOG_FILE rtl_deca/hdmi/I2C_Controller.v
 set_global_assignment -name VERILOG_FILE rtl_deca/hdmi/I2C_HDMI_Config.v
 
-#
 #======================================
 
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-
-
-
-
 
 
 

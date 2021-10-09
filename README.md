@@ -1,22 +1,35 @@
 # MemTest - Utility to test SDRAM daughter board.
 
-Ported from Neptuno port https://github.com/neptuno-fpga/MemTest_Mister
+Memtest by Somhic ported from Neptuno https://github.com/neptuno-fpga/MemTest_Mister, which was ported from Multicore 2, which was ported from original Memory tester for MiSTer (https://github.com/MiSTer-devel/MemTest_MiSTer).
 
-Original Memory tester for MiSTer.              https://github.com/MiSTer-devel/MemTest_MiSTer
+**Features:**
 
-Tested with PS2 & R2R VGA adapter (333)  https://www.waveshare.com/vga-ps2-board.htm
+* HDMI & VGA video output
+* Added board buttons to control test.
+
+
+VGA tested with PS2 & R2R VGA adapter (333)  https://www.waveshare.com/vga-ps2-board.htm
 
 Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/sdram_mister_deca))
 
-Added HDMI Output.
+**Additional hardware required**:
 
-Added board buttons to control test.
+- PS/2 Keyboard connected to GPIO. See connections below
 
+**Status**:
 
+- Working fine with 32 MB mermoy modules. Usually is stable at 160 MHz.
 
-### Result of memtest:     Working at 167 MHz without errors
+* Does not work with 128 MB memory modules. 
 
-![realtest](realtest.png)
+**Compiling:**
+
+* Load project  in /synth/DECA/memtest_deca.qpf
+* sof/svf files already included in /synth/DECA/output_files/
+
+**Pinout connections:**
+
+![pinout_deca](pinout_deca.png)
 
 
 
