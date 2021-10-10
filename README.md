@@ -4,21 +4,20 @@ Memtest by Somhic ported from Neptuno https://github.com/neptuno-fpga/MemTest_Mi
 
 **Features:**
 
-* HDMI & VGA video output
-* Added board buttons to control test.
-
-
-VGA tested with PS2 & R2R VGA adapter (333)  https://www.waveshare.com/vga-ps2-board.htm
+* HDMI  video output
+* VGA video output is available through GPIO (see pinout below). Tested with PS2 & R2R VGA adapter (333)  https://www.waveshare.com/vga-ps2-board.htm
+* Added board buttons to control test without keyboard (see below)
 
 Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/sdram_mister_deca))
 
-**Additional hardware required**:
+**Recommended additional hardware** (withouth it the core works):
 
-- PS/2 Keyboard connected to GPIO. See connections below
+- SDRAM module for testing. Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/sdram_mister_deca))
+- PS/2 Keyboard connected to GPIO  (see pinout below)
 
-**Status**:
+**STATUS**:
 
-- Working fine with 32 MB mermoy modules. Usually is stable at 160 MHz.
+- Working fine with new 32 MB memory modules. Stable at 160 MHz.
 
 * Does not work with 128 MB memory modules. 
 
@@ -31,7 +30,9 @@ Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](
 
 ![pinout_deca](pinout_deca.png)
 
+Mouse, Joystick and Audio are not defined in this core.
 
+Keyboard is optional as core can be controlled  by board buttons (see below)
 
 ## Memtest screen:
 
@@ -49,15 +50,16 @@ Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](
  6. Number of failed tests.
 
 ## Controls (keyboard)
-* Up - increase frequency   (KEY0 BUTTON)
+* Up - increase frequency   (DECA KEY0 BUTTON)
 
-* Down - decrease frequency (KEY1 BUTTON)
+* Down - decrease frequency (DECA KEY1 BUTTON)
 
 * ESC - reset the test
 
-* A - auto mode, detecting the maximum frequency for module being tested. Test starts from maximum frequency. With every error frequency will be decreased. [SW1 SWITCH]
+* A - auto mode, detecting the maximum frequency for module being tested. Test starts from maximum frequency. With every error frequency will be decreased. [DECA SW1 SWITCH]
   
   
 
 Test is passed if amount of errors is 0. For quick test let it run for 10 minutes in auto mode. If you want to be sure, let it run for 1-2 hours.
+
 Board should pass at least 130 MHz clock test. Any higher clock will assure the higher quality of the board.
