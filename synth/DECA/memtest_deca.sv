@@ -85,9 +85,9 @@ module memtest_deca
 	output		          		HDMI_TX_VS,
 
 	// VGA
-	output  [2:0] VGA_R,
-	output  [2:0] VGA_G,
-	output  [2:0] VGA_B,
+	output  [3:0] VGA_R,
+	output  [3:0] VGA_G,
+	output  [3:0] VGA_B,
 	output        VGA_HS,
 	output        VGA_VS
 	
@@ -513,9 +513,9 @@ vgaout showrez
 assign VGA_HS = ~hs;
 assign VGA_VS = ~vs;
 
-assign VGA_B  = {3{b}};
-assign VGA_R  = {3{r}};
-assign VGA_G  = {3{g}};
+assign VGA_B  = {4{b}};
+assign VGA_R  = {4{r}};
+assign VGA_G  = {4{g}};
 
 ///////////////////////////////////////////////////////////////////
 

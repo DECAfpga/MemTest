@@ -1,23 +1,26 @@
 # MemTest - Utility to test SDRAM daughter board.
 
-Memtest by Somhic ported from Neptuno https://github.com/neptuno-fpga/MemTest_Mister, which was ported from Multicore 2, which was ported from original Memory tester for MiSTer (https://github.com/MiSTer-devel/MemTest_MiSTer).
+Memtest by Somhic ported from Neptuno https://github.com/neptuno-fpga/MemTest_Mister, which was ported from Multicore 2, which was already ported from original Memory tester for MiSTer (https://github.com/MiSTer-devel/MemTest_MiSTer).
 
 **Features:**
 
 * HDMI  video output
-* VGA video output is available through GPIO (see pinout below). Tested with PS2 & R2R VGA adapter (333)  https://www.waveshare.com/vga-ps2-board.htm
+* VGA video output is available through GPIO (see pinout below). 
+  * Tested with PS2 & R2R VGA adapter (333)  https://www.waveshare.com/vga-ps2-board.htm
+
 * Added board buttons to control test without keyboard (see below)
 
 Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/sdram_mister_deca))
 
 **Recommended additional hardware** (withouth it the core works):
 
-- SDRAM module for testing. Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/sdram_mister_deca))
+- SDRAM module for testing. 
 - PS/2 Keyboard connected to GPIO  (see pinout below)
 
 **STATUS**:
 
-- Working fine with new 32 MB memory modules. Stable at 160 MHz.
+- 22/04/22 compatible with Deca Retro Cape 2 (old sdram 3 pins new location)
+- Working fine with new 32 MB memory modules. Stable at 160 MHz. Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/sdram_mister_deca))
 
 * Does not work with 128 MB memory modules. 
 
