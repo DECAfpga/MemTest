@@ -2,12 +2,13 @@
 
 Memtest by Somhic ported from Neptuno https://github.com/neptuno-fpga/MemTest_Mister, which was ported from Multicore 2, which was already ported from original Memory tester for MiSTer (https://github.com/MiSTer-devel/MemTest_MiSTer).
 
+**Now compatible with [Deca Retro Cape 2](https://github.com/somhi/DECA_retro_cape_2)** (new location for 3 pins of old SDRAM modules). Otherwise see pinout below to connect everything through GPIOs.
+
 **Features:**
 
 * HDMI  video output
 * VGA video output is available through GPIO (see pinout below). 
-  * Tested with PS2 & R2R VGA adapter (333)  https://www.waveshare.com/vga-ps2-board.htm
-
+  
 * Added board buttons to control test without keyboard (see below)
 
 Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/sdram_mister_deca))
@@ -33,7 +34,7 @@ Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](
 
 ![pinout_deca](pinout_deca.png)
 
-Mouse, Joystick and Audio are not defined in this core.
+Mouse, Joystick and Audio/MIDI are not defined in this core.
 
 Keyboard is optional as core can be controlled  by board buttons (see below)
 
